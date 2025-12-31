@@ -8,6 +8,7 @@ import {
   AiOutlineHome,
   AiOutlineFundProjectionScreen,
   AiOutlineUser,
+  AiOutlineMail,
 } from "react-icons/ai";
 
 import { CgFileDocument } from "react-icons/cg";
@@ -38,6 +39,13 @@ function NavBar() {
         to: "/blog",
         icon: <ImBlog style={{ marginBottom: "2px" }} />,
         show: hasBlog,
+      },
+      {
+        key: "contact",
+        label: "Contact",
+        to: "/contact",
+        icon: <AiOutlineMail style={{ marginBottom: "2px" }} />,
+        show: true,
       },
       {
         key: "resume",

@@ -64,7 +64,7 @@ function Blog() {
                     </div>
                     <Card.Title>{post.title}</Card.Title>
                     {post.published_at ? (
-                      <div className="text-muted small mb-2">
+                      <div className="text-white small mb-2">
                         {new Date(post.published_at).toLocaleDateString()}
                       </div>
                     ) : null}
@@ -84,7 +84,7 @@ function Blog() {
             ))
           ) : (
             <Col>
-              <div className="text-muted">No published posts yet. Create one from the admin panel.</div>
+              <div className="text-white">No published posts yet. Create one from the admin panel.</div>
             </Col>
           )}
         </Row>

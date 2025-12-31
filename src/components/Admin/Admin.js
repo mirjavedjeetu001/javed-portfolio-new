@@ -159,6 +159,22 @@ function Admin() {
   }
 
   async function saveListItem(resource, item, setList) {
+    // Normalize certifications payload to match DB schema and avoid invalid dates
+    if (resource === "certifications") {
+      if (!item.start_date) {
+        showBanner("danger", "Start date is required for certifications.");
+        return;
+      }
+      item = {
+        ...item,
+        end_date: item.end_date || null,
+        field_of_study: item.field_of_study || "",
+        description: item.description || "",
+        degree: item.degree || "",
+        institution: item.institution || "",
+      };
+    }
+
     try {
       setLoading(true);
       const path = item.id ? `/admin/${resource}/${item.id}` : `/admin/${resource}`;
@@ -214,7 +230,7 @@ function Admin() {
       setLoading(true);
       const encoded = await fileToBase64(file);
       const { data } = await api.post("/admin/upload/resume", { file: encoded, filename: file.name });
-      const apiBase = process.env.REACT_APP_API_URL || "http://localhost:5001/api";
+      const apiBase = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
       const apiOrigin = apiBase.replace(/\/?api\/?$/, "");
       const fileUrl = data.url?.startsWith("http") ? data.url : `${apiOrigin}${data.url}`;
       setAbout((prev) => ({ ...(prev || {}), resume: fileUrl }));
@@ -1049,13 +1065,12 @@ function Admin() {
                 className="ms-auto"
                 onClick={() =>
                   addBlank(setCertifications, {
-                    title: "",
-                    issuer: "",
+                    degree: "",
+                    institution: "",
                     field_of_study: "",
                     start_date: "",
                     end_date: "",
                     description: "",
-                    credential_url: "",
                     order: certifications.length + 1,
                   })
                 }
@@ -1070,25 +1085,25 @@ function Admin() {
                     <Card.Body>
                       <Form>
                         <Form.Group className="mb-2">
-                          <Form.Label>Title</Form.Label>
+                          <Form.Label>Degree / Certification</Form.Label>
                           <Form.Control
-                            value={item.title || ""}
+                            value={item.degree || ""}
                             onChange={(e) =>
-                              setCertifications((prev) => prev.map((p) => (p.id === item.id || p.__tmp === item.__tmp ? { ...p, title: e.target.value } : p)))
+                              setCertifications((prev) => prev.map((p) => (p.id === item.id || p.__tmp === item.__tmp ? { ...p, degree: e.target.value } : p)))
                             }
                           />
                         </Form.Group>
                         <Form.Group className="mb-2">
-                          <Form.Label>Issuer</Form.Label>
+                          <Form.Label>Institution</Form.Label>
                           <Form.Control
-                            value={item.issuer || ""}
+                            value={item.institution || ""}
                             onChange={(e) =>
-                              setCertifications((prev) => prev.map((p) => (p.id === item.id || p.__tmp === item.__tmp ? { ...p, issuer: e.target.value } : p)))
+                              setCertifications((prev) => prev.map((p) => (p.id === item.id || p.__tmp === item.__tmp ? { ...p, institution: e.target.value } : p)))
                             }
                           />
                         </Form.Group>
                         <Form.Group className="mb-2">
-                          <Form.Label>Category / Field</Form.Label>
+                          <Form.Label>Field of Study</Form.Label>
                           <Form.Control
                             value={item.field_of_study || ""}
                             onChange={(e) =>
@@ -1118,15 +1133,6 @@ function Admin() {
                             />
                           </Col>
                         </Row>
-                        <Form.Group className="mb-2">
-                          <Form.Label>Credential URL</Form.Label>
-                          <Form.Control
-                            value={item.credential_url || ""}
-                            onChange={(e) =>
-                              setCertifications((prev) => prev.map((p) => (p.id === item.id || p.__tmp === item.__tmp ? { ...p, credential_url: e.target.value } : p)))
-                            }
-                          />
-                        </Form.Group>
                         <Form.Group className="mb-2">
                           <Form.Label>Order</Form.Label>
                           <Form.Control

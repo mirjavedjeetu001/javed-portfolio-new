@@ -53,7 +53,7 @@ CREATE TABLE `about` (
 
 LOCK TABLES `about` WRITE;
 /*!40000 ALTER TABLE `about` DISABLE KEYS */;
-INSERT INTO `about` VALUES (1,'Hi There! 👋','Mir Javed Jahanger','test','System Engineer (SOC) , Full Stack Developer, DevOps Engineer, Security Analyst, Cloud Architect','System Engineer (SOC) skilled in fintech monitoring and incident response.Experienced in improving uptime, reliability, and CI/CD processes.Strong in backend/frontend development and debugging.Builds practical GitHub projects with JS/TS, Node.js, and APIs.Focused on clean architecture, automation, and scalable systems.','https://i.postimg.cc/Xq1R1D9j/548194464-770427085888234-1528911993295424645-n.jpg','http://localhost:5001/uploads/resumes/1767177023498-mir_javed_resume_compressed.pdf','javedmirjeetu.official@gmail.com','+8801811-480222','IT Park, Jashore, Bangladesh','Hi Everyone, I am Mir Javed from Jashore, Bangladesh.\r\nI am a Computer Science Engineer, Full-Stack Developer, Android Application Developer, MERN Stack Developer, Open Source Contributor.','Listening to Music,\r\nPlaying Games,\r\nWatching Movies,\r\nTravelling','\"I want to do creative works to change our daily life\"','Mir Javed','https://github.com/mirjavedjeetu001','https://linkedin.com/in/mirjavedjeetu001/','','2025-12-25 16:09:21.793894','2025-12-31 16:30:26.639514');
+INSERT INTO `about` VALUES (1,'Hi There! 👋','Mir Javed Jahanger','test','System Engineer (SOC) , Full Stack Developer, DevOps Engineer, Security Analyst, Cloud Architect','System Engineer (SOC) skilled in fintech monitoring and incident response.Experienced in improving uptime, reliability, and CI/CD processes.Strong in backend/frontend development and debugging.Builds practical GitHub projects with JS/TS, Node.js, and APIs.Focused on clean architecture, automation, and scalable systems.','https://i.postimg.cc/Xq1R1D9j/548194464-770427085888234-1528911993295424645-n.jpg','http://localhost:5000/uploads/resumes/1767185583131-mir_javed_resume_compressed.pdf','javedmirjeetu.official@gmail.com','+8801811-480222','IT Park, Jashore, Bangladesh','Hi Everyone, I am Mir Javed from Jashore, Bangladesh.\r\nI am a Computer Science Engineer, Full-Stack Developer, Android Application Developer, MERN Stack Developer, Open Source Contributor.','Listening to Music,\r\nPlaying Games,\r\nWatching Movies,\r\nTravelling','\"I want to do creative works to change our daily life\"','Mir Javed','https://github.com/mirjavedjeetu001','https://linkedin.com/in/mirjavedjeetu001/','','2025-12-25 16:09:21.793894','2025-12-31 18:53:04.433964');
 /*!40000 ALTER TABLE `about` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +171,7 @@ CREATE TABLE `certifications` (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `order` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,6 +180,7 @@ CREATE TABLE `certifications` (
 
 LOCK TABLES `certifications` WRITE;
 /*!40000 ALTER TABLE `certifications` DISABLE KEYS */;
+INSERT INTO `certifications` VALUES (2,'sdsd','zxczds','dsdfd','2025-12-15','2025-12-24','',1);
 /*!40000 ALTER TABLE `certifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +233,7 @@ CREATE TABLE `contact_messages` (
   `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +242,7 @@ CREATE TABLE `contact_messages` (
 
 LOCK TABLES `contact_messages` WRITE;
 /*!40000 ALTER TABLE `contact_messages` DISABLE KEYS */;
-INSERT INTO `contact_messages` VALUES (1,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:37:22.387430','2025-12-26 20:37:22.387430'),(2,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:45:08.641887','2025-12-26 20:45:08.641887'),(3,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:48:20.452814','2025-12-26 20:48:20.452814'),(4,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:51:08.915429','2025-12-26 20:51:08.915429');
+INSERT INTO `contact_messages` VALUES (1,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:37:22.387430','2025-12-26 20:37:22.387430'),(2,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:45:08.641887','2025-12-26 20:45:08.641887'),(3,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:48:20.452814','2025-12-26 20:48:20.452814'),(4,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Contact from Portfolio','test','new','2025-12-26 20:51:08.915429','2025-12-26 20:51:08.915429'),(5,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Reactive my card','test','in_progress','2025-12-31 18:11:09.898096','2025-12-31 18:11:22.456144'),(6,'Mir Javed Jahanger','javedmirjeetu.official@gmail.com','01811480222','Reactive my card','test','new','2025-12-31 19:11:22.521475','2025-12-31 19:11:22.521475');
 /*!40000 ALTER TABLE `contact_messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,7 +487,7 @@ CREATE TABLE `site_settings` (
 
 LOCK TABLES `site_settings` WRITE;
 /*!40000 ALTER TABLE `site_settings` DISABLE KEYS */;
-INSERT INTO `site_settings` VALUES (1,'Mir Javed Jahanger','Mir Javed Jahanger - Developer','Portfolio of Mir Javed Jahanger - System Engineer (SOC) at Sheba Platform Limited. Expertise in monitoring mission-critical fintech services, full-stack development, DevOps, and AI integration.','portfolio, web development, full stack','','','','','',NULL,NULL,NULL,NULL,NULL,NULL,'Welcome to My Portfolio',NULL,NULL,NULL,'View My Work','/projects','javed ',NULL,1,NULL,NULL,NULL,1,1,1,1,'Portfolio Admin','Portfolio Management','Welcome to Portfolio Admin Panel',0,NULL,'2025-12-25 16:09:22.344000','2025-12-30 10:01:58.663000','JAVED','#000000','#f7931e');
+INSERT INTO `site_settings` VALUES (1,'Mir Javed Jahanger','Mir Javed Jahanger - Developer','Portfolio of Mir Javed Jahanger - System Engineer (SOC) at Sheba Platform Limited. Expertise in monitoring mission-critical fintech services, full-stack development, DevOps, and AI integration.','portfolio, web development, full stack','','','javedmirjeetu.official@gmail.com','01811480222','243/A, Salimuddin Market Road, Mirpur 1, Dhaka',NULL,NULL,NULL,NULL,NULL,NULL,'Welcome to My Portfolio',NULL,NULL,NULL,'View My Work','/projects','javed ',NULL,1,NULL,NULL,NULL,1,1,1,1,'Portfolio Admin','Portfolio Management','Welcome to Portfolio Admin Panel',0,NULL,'2025-12-25 16:09:22.344000','2025-12-31 18:11:48.182416','JAVED','#000000','#f7931e');
 /*!40000 ALTER TABLE `site_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -611,4 +612,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-31 16:52:41
+-- Dump completed on 2025-12-31 19:22:49

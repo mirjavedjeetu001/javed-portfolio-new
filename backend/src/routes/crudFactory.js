@@ -17,10 +17,13 @@ function createCrudRouter(config) {
     body(field).optional({ nullable: true })
   );
 
+  const tableName = `\`${table}\``;
+  const primaryKeyCol = `\`${primaryKey}\``;
+
   router.get("/", async (_req, res) => {
     try {
       const orderClause = orderBy ? ` ORDER BY ${orderBy}` : "";
-      const [rows] = await pool.query(`SELECT * FROM ${table}${orderClause}`);
+      const [rows] = await pool.query(`SELECT * FROM ${tableName}${orderClause}`);
       return res.json(rows);
     } catch (err) {
       return res.status(500).json({ message: "Failed to fetch records", error: err.message });
@@ -29,10 +32,7 @@ function createCrudRouter(config) {
 
   router.get(`/:id`, async (req, res) => {
     try {
-      const [rows] = await pool.query(
-        `SELECT * FROM ${table} WHERE ${primaryKey} = ? LIMIT 1`,
-        [req.params.id]
-      );
+      const [rows] = await pool.query(`SELECT * FROM ${tableName} WHERE ${primaryKeyCol} = ? LIMIT 1`, [req.params.id]);
       if (!rows.length) {
         return res.status(404).json({ message: "Record not found" });
       }
@@ -57,15 +57,10 @@ function createCrudRouter(config) {
         const columns = Object.keys(payload);
         const placeholders = columns.map(() => "?").join(",");
         const values = Object.values(payload);
+        const columnList = columns.map((c) => `\`${c}\``).join(",");
 
-        const [result] = await pool.query(
-          `INSERT INTO ${table} (${columns.join(",")}) VALUES (${placeholders})`,
-          values
-        );
-        const [rows] = await pool.query(
-          `SELECT * FROM ${table} WHERE ${primaryKey} = ? LIMIT 1`,
-          [result.insertId]
-        );
+        const [result] = await pool.query(`INSERT INTO ${tableName} (${columnList}) VALUES (${placeholders})`, values);
+        const [rows] = await pool.query(`SELECT * FROM ${tableName} WHERE ${primaryKeyCol} = ? LIMIT 1`, [result.insertId]);
         return res.status(201).json(rows[0]);
       } catch (err) {
         return res.status(500).json({ message: "Failed to create record", error: err.message });
@@ -85,23 +80,17 @@ function createCrudRouter(config) {
         }
 
         const assignments = Object.keys(payload)
-          .map((field) => `${field} = ?`)
+          .map((field) => `\`${field}\` = ?`)
           .join(",");
         const values = [...Object.values(payload), req.params.id];
 
-        const [result] = await pool.query(
-          `UPDATE ${table} SET ${assignments} WHERE ${primaryKey} = ?`,
-          values
-        );
+        const [result] = await pool.query(`UPDATE ${tableName} SET ${assignments} WHERE ${primaryKeyCol} = ?`, values);
 
         if (result.affectedRows === 0) {
           return res.status(404).json({ message: "Record not found" });
         }
 
-        const [rows] = await pool.query(
-          `SELECT * FROM ${table} WHERE ${primaryKey} = ? LIMIT 1`,
-          [req.params.id]
-        );
+        const [rows] = await pool.query(`SELECT * FROM ${tableName} WHERE ${primaryKeyCol} = ? LIMIT 1`, [req.params.id]);
         return res.json(rows[0]);
       } catch (err) {
         return res.status(500).json({ message: "Failed to update record", error: err.message });
@@ -110,10 +99,7 @@ function createCrudRouter(config) {
 
     router.delete(`/:id`, async (req, res) => {
       try {
-        const [result] = await pool.query(
-          `DELETE FROM ${table} WHERE ${primaryKey} = ?`,
-          [req.params.id]
-        );
+        const [result] = await pool.query(`DELETE FROM ${tableName} WHERE ${primaryKeyCol} = ?`, [req.params.id]);
         if (result.affectedRows === 0) {
           return res.status(404).json({ message: "Record not found" });
         }

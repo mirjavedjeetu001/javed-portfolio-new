@@ -93,19 +93,121 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
+/* Contact page */
+.contact-section {
+  min-height: 80vh;
+}
+
+.contact-section .bg-dark {
+  background: #1f1f1f !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Mobile Responsive Improvements */
 @media (max-width: 900px) {
   .admin-shell {
     grid-template-columns: 1fr;
   }
   .admin-sidebar {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .admin-brand {
+    display: inline-block;
+    margin-right: 12px;
+    vertical-align: middle;
   }
   .admin-nav-link {
-    padding: 8px 10px !important;
+    padding: 8px 12px !important;
+    font-size: 13px;
+    display: inline-block;
+  }
+  .admin-main {
+    padding: 16px 12px;
   }
 }
+
+@media (max-width: 768px) {
+  /* Admin header responsive */
+  .admin-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  /* Form inputs full width on mobile */
+  .admin-main .form-control,
+  .admin-main .form-select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Buttons full width on mobile */
+  .admin-main .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .admin-main .btn-group .btn {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  /* Tables scroll horizontally */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Resume section mobile */
+  .resume-section {
+    padding: 80px 0 40px;
+  }
+  .resume-actions .btn {
+    min-width: 140px;
+    font-size: 14px;
+  }
+  
+  /* Contact form mobile */
+  .contact-section .bg-dark {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Smaller screens */
+  .admin-sidebar {
+    font-size: 13px;
+  }
+  .admin-brand-title {
+    font-size: 11px;
+  }
+  .admin-brand-sub {
+    font-size: 14px;
+  }
+  
+  /* Stack resume buttons */
+  .resume-actions {
+    flex-direction: column !important;
+  }
+  .resume-actions .btn {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  /* Mobile navigation */
+  .navbar-brand {
+    font-size: 16px !important;
+  }
+  
+  /* Project cards full width */
+  .project-card-view {
+    margin-bottom: 16px;
+  }
+}
+
 .App {
   text-align: center;
 }

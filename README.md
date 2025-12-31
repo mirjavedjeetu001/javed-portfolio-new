@@ -13,8 +13,8 @@ This repository contains the full-stack portfolio for Mir Javed Jahanger. The fr
 2) Install backend dependencies: `cd backend && npm install`
 3) Copy backend env: `cp backend/.env.example backend/.env` and set DB credentials, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `JWT_SECRET`, and `CORS_ORIGIN`.
 4) Import sample data (optional): `mysql -u <user> -p portfolio < portfolio_full_backup.sql`
-5) Start API: `cd backend && npm run dev` (default port 5001)
-6) Start frontend: `npm start` (default port 3000, uses `REACT_APP_API_URL` or falls back to `http://localhost:5001/api`)
+5) Start API: `cd backend && npm run dev` (default port 5000)
+6) Start frontend: `npm start` (default port 3000, uses `REACT_APP_API_URL` or falls back to `http://localhost:5000/api`)
 7) Admin panel: open `/admin` and sign in with the credentials from `.env` to edit About, Site Settings, Projects, etc.
 
 ## Build & Single-Folder Deploy

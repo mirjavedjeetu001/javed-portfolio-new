@@ -10,6 +10,9 @@ function Footer() {
   const year = date.getFullYear();
   const about = data?.about;
   const settings = data?.siteSettings;
+  const footerText = settings?.footer_text || `Designed and developed by ${about?.name || settings?.site_name || "Portfolio"}`;
+  const footerSub = settings?.footer_description || settings?.site_name || about?.name || "MJ";
+  const copyName = settings?.site_name || about?.name?.split(" ")?.[0] || "MJ";
 
   const socials = useMemo(
     () => [
@@ -24,10 +27,11 @@ function Footer() {
     <Container fluid className="footer">
       <Row>
         <Col md="4" className="footer-copywright">
-          <h3>Designed and developed by {about?.name || settings?.site_name || "Portfolio"}</h3>
+          <h3>{footerText}</h3>
+          <div className="text-muted small">{footerSub}</div>
         </Col>
         <Col md="4" className="footer-copywright">
-          <h3>Copyright © {year} {about?.name?.split(" ")[0] || "MJ"}</h3>
+          <h3>Copyright © {year} {copyName}</h3>
         </Col>
         <Col md="4" className="footer-body">
           <ul className="footer-icons">
@@ -45,7 +49,7 @@ function Footer() {
                 </li>
               ))
             ) : (
-              <li className="text-muted small">Add socials in admin to show links here.</li>
+              <li className="text-white small">Add socials in admin to show links here.</li>
             )}
           </ul>
         </Col>

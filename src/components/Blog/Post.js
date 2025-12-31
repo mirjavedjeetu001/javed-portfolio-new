@@ -26,7 +26,7 @@ function BlogPost() {
           <Card className="shadow-sm">
             <Card.Body>
               <Card.Title>Post not found</Card.Title>
-              <p className="text-muted">The article you're looking for doesn't exist or isn't published.</p>
+              <p className="text-white">The article you're looking for doesn't exist or isn't published.</p>
               <Button variant="primary" onClick={() => navigate(-1)}>
                 Go back
               </Button>
@@ -51,19 +51,19 @@ function BlogPost() {
                   {post.reading_time ? <Badge bg="secondary" className="me-2">{post.reading_time} min read</Badge> : null}
                   {category ? <Badge bg="info">{category.name}</Badge> : null}
                   {post.published_at ? (
-                    <div className="text-muted small ms-auto">
+                    <div className="text-white small ms-auto">
                       {new Date(post.published_at).toLocaleDateString()}
                     </div>
                   ) : null}
                 </div>
                 <Card.Title>{post.title}</Card.Title>
-                <Card.Text className="text-muted">{post.excerpt}</Card.Text>
+                <Card.Text className="text-white">{post.excerpt}</Card.Text>
                 <div style={{ whiteSpace: "pre-line", lineHeight: 1.6 }}>{post.content}</div>
                 <div className="d-flex justify-content-between align-items-center mt-4">
                   <Button as={Link} to="/blog" variant="outline-secondary" size="sm">
                     ← Back to blog
                   </Button>
-                  <div className="text-muted small">{data?.about?.name || data?.siteSettings?.site_name}</div>
+                  <div className="text-white small">{data?.about?.name || data?.siteSettings?.site_name}</div>
                 </div>
               </Card.Body>
             </Card>

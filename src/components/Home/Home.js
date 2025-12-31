@@ -4,6 +4,7 @@ import homeLogo from "../../Assets/home-main.svg";
 import Particle from "../Particle";
 import Home2 from "./Home2";
 import Type from "./Type";
+import Contact from "../Contact/Contact";
 import { Link } from "react-router-dom";
 import { AiOutlineTwitter, AiFillInstagram } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -21,21 +22,24 @@ function Home() {
 
   const titles = useMemo(() => {
     if (about?.titles_list) {
-      return about.titles_list.split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
+      return about.titles_list.split(/[\,\n]/).map((item) => item.trim()).filter(Boolean);
     }
     return ["System Engineer", "Full Stack Developer", "DevOps Engineer"];
   }, [about]);
 
   const socials = useMemo(
     () => [
-      { icon: <AiOutlineTwitter />, url: about?.twitter },
-      { icon: <FaLinkedinIn />, url: about?.linkedin },
+      { icon: <AiOutlineTwitter />, url: about?.twitter || settings?.twitter_url },
+      { icon: <FaLinkedinIn />, url: about?.linkedin || settings?.linkedin_url },
       { icon: <AiFillInstagram />, url: settings?.instagram_url },
     ].filter((item) => Boolean(item.url)),
     [about, settings]
   );
 
-  const heroImage = about?.profile_image || settings?.hero_background_image || homeLogo;
+  const heroImage = settings?.hero_background_image || about?.profile_image || homeLogo;
+  const heroTitle = settings?.hero_title || about?.greeting || "Hi There!";
+  const heroSubtitle = settings?.hero_subtitle || about?.name || "Mir Javed";
+  const heroDescription = settings?.hero_description || about?.intro_text || about?.bio || "";
 
   const latestPosts = useMemo(() => {
     if (!blogPosts.length) return [];
@@ -56,16 +60,17 @@ function Home() {
           <Row>
             <Col md={7} className="home-header">
               <h1 style={{ paddingBottom: 15 }} className="heading">
-                {about?.greeting || "Hi There!"}{" "}
+                {heroTitle} {" "}
                 <span className="wave" role="img" aria-labelledby="wave">
                   👋🏻
                 </span>
               </h1>
 
               <h1 className="heading-name">
-                I'M
-                <strong className="main-name"> {about?.name || "Mir Javed"}</strong>
+                <strong className="main-name">{heroSubtitle}</strong>
               </h1>
+
+              {heroDescription && <p className="text-light mt-3 mb-0" style={{ maxWidth: 520 }}>{heroDescription}</p>}
 
               <div style={{ padding: 50, textAlign: "left" }}>
                 {loading ? (
@@ -117,7 +122,7 @@ function Home() {
             ))
           ) : (
             <Col>
-              <div className="text-muted text-center">Add your experience in the admin to showcase it here.</div>
+              <div className="text-white text-center">Add your experience in the admin to showcase it here.</div>
             </Col>
           )}
         </Row>
@@ -150,7 +155,7 @@ function Home() {
             ))
           ) : (
             <Col>
-              <div className="text-muted text-center">Share your education from admin to feature it here.</div>
+              <div className="text-white text-center">Share your education from admin to feature it here.</div>
             </Col>
           )}
         </Row>
@@ -222,7 +227,7 @@ function Home() {
             ))
           ) : (
             <Col>
-              <div className="text-muted">Publish a blog post from the admin to spotlight it here.</div>
+              <div className="text-white">Publish a blog post from the admin to spotlight it here.</div>
             </Col>
           )}
         </Row>
@@ -256,11 +261,16 @@ function Home() {
             ))
           ) : (
             <Col>
-              <div className="text-muted text-center">Testimonials you add in admin will be featured here.</div>
+              <div className="text-white text-center">Testimonials you add in admin will be featured here.</div>
             </Col>
           )}
         </Row>
-        <Row style={{ paddingTop: "50px", paddingBottom: "80px" }}>
+      </Container>
+
+      <Contact />
+
+      <Container style={{ paddingTop: "50px" }}>
+        <Row style={{ paddingBottom: "80px" }}>
           <Col md={12} className="home-about-social">
             <h1>Find Me On</h1>
             <p>
