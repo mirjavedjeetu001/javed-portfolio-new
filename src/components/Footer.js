@@ -1,66 +1,52 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import {
-  AiFillGithub,
-  AiOutlineTwitter,
-  AiFillInstagram,
-} from "react-icons/ai";
+import { AiOutlineTwitter, AiFillInstagram } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
+import usePortfolio from "../hooks/usePortfolio";
 
 function Footer() {
-  let date = new Date();
-  let year = date.getFullYear();
+  const { data } = usePortfolio();
+  const date = new Date();
+  const year = date.getFullYear();
+  const about = data?.about;
+  const settings = data?.siteSettings;
+
+  const socials = useMemo(
+    () => [
+      { icon: <AiOutlineTwitter />, url: about?.twitter || settings?.twitter_url },
+      { icon: <FaLinkedinIn />, url: about?.linkedin || settings?.linkedin_url },
+      { icon: <AiFillInstagram />, url: settings?.instagram_url },
+    ].filter((item) => Boolean(item.url)),
+    [about, settings]
+  );
+
   return (
     <Container fluid className="footer">
       <Row>
         <Col md="4" className="footer-copywright">
-          <h3>Designed and Developed by Soumyajit Behera</h3>
+          <h3>Designed and developed by {about?.name || settings?.site_name || "Portfolio"}</h3>
         </Col>
         <Col md="4" className="footer-copywright">
-          <h3>Copyright © {year} SB</h3>
+          <h3>Copyright © {year} {about?.name?.split(" ")[0] || "MJ"}</h3>
         </Col>
         <Col md="4" className="footer-body">
           <ul className="footer-icons">
-            <li className="social-icons">
-              <a
-                href="https://github.com/soumyajit4419"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiFillGithub />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://twitter.com/Soumyajit4419"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiOutlineTwitter />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://www.linkedin.com/in/soumyajit4419/"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://www.instagram.com/soumyajit4419"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiFillInstagram />
-              </a>
-            </li>
+            {socials.length ? (
+              socials.map((item, idx) => (
+                <li className="social-icons" key={idx}>
+                  <a
+                    href={item.url}
+                    style={{ color: "white" }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.icon}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li className="text-muted small">Add socials in admin to show links here.</li>
+            )}
           </ul>
         </Col>
       </Row>

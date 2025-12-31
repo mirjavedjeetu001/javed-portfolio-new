@@ -1,76 +1,28 @@
-<h2 align="center">
-  Portfolio Website - v2.0<br/>
-  <a href="https://soumyajit.vercel.app/" target="_blank">soumyajit.tech</a>
-</h2>
-<div align="center">
-  <img alt="Demo" src="./Images/readme-img1.png" />
-</div>
+# Mir Javed Jahanger – Portfolio
 
-<br/>
+This repository contains the full-stack portfolio for Mir Javed Jahanger. The frontend is React, the backend is Express + MySQL, and both are set up to run locally or as a single deployable bundle.
 
-<center>
-
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
-![GitHub Repo stars](https://img.shields.io/github/stars/soumyajit4419/Portfolio?color=red&logo=github&style=for-the-badge) &nbsp;
-![GitHub forks](https://img.shields.io/github/forks/soumyajit4419/Portfolio?color=red&logo=github&style=for-the-badge)
-
-</center>
-
-<h3 align="center">
-    🔹
-    <a href="https://github.com/soumyajit4419/Portfolio/issues">Report Bug</a> &nbsp; &nbsp;
-    🔹
-    <a href="https://github.com/soumyajit4419/Portfolio/issues">Request Feature</a>
-</h3>
-
-## TL;DR
-
-You can fork this repo to modify and make changes of your own. Please give me proper credit by linking back to [Soumyajit4419](https://github.com/soumyajit4419/Portfolio). Thanks!
-
-## Built With
-
-My personal portfolio <a href="https://soumyajit.vercel.app/" target="_blank">soumyajit.tech</a> which features some of my github projects as well as my resume and technical skills.<br/>
-
-This project was built using these technologies.
-
-- React.js
-- Node.js
-- Express.js
+## Tech Stack
+- React (CRA) + React-Bootstrap
+- Node.js / Express
+- MySQL
 - CSS3
-- VsCode
-- Vercel
 
-## Features
+## Local Development
+1) Install dependencies at the root: `npm install`
+2) Install backend dependencies: `cd backend && npm install`
+3) Copy backend env: `cp backend/.env.example backend/.env` and set DB credentials, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `JWT_SECRET`, and `CORS_ORIGIN`.
+4) Import sample data (optional): `mysql -u <user> -p portfolio < portfolio_full_backup.sql`
+5) Start API: `cd backend && npm run dev` (default port 5001)
+6) Start frontend: `npm start` (default port 3000, uses `REACT_APP_API_URL` or falls back to `http://localhost:5001/api`)
+7) Admin panel: open `/admin` and sign in with the credentials from `.env` to edit About, Site Settings, Projects, etc.
 
-**📖 Multi-Page Layout**
+## Build & Single-Folder Deploy
+- Build frontend: `npm run build` (outputs `/build`)
+- Start production server: `node backend/src/server.js` (serves `/api/*` and the `/build` folder)
+- Health check: `GET /api/health` returns `{status:"ok"}` when the DB is reachable.
 
-**🎨 Styled with React-Bootstrap and Css with easy to customize colors**
-
-**📱 Fully Responsive**
-
-## Getting Started
-
-Clone down this repository. You will need `node.js` and `git` installed globally on your machine.
-
-## 🛠 Installation and Setup Instructions
-
-1. Installation: `npm install`
-
-2. In the project directory, you can run: `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-The page will reload if you make edits.
-
-## Usage Instructions
-
-Open the project folder and Navigate to `/src/components/`. <br/>
-You will find all the components used and you can edit your information accordingly.
-
-### Show your support
-
-Give a ⭐ if you like this website!
-
-<a href="https://www.buymeacoffee.com/soumyajit4419" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" height= "60px" width= "217px" ></a>
+## Notes
+- Replace portfolio content via the Admin panel (About, Projects, Resume link, Skills, Blogs).
+- Update SEO/meta in `public/index.html` for your preferred title and preview image.
+- Resume uploads are stored under `backend/uploads/resumes` and served at `/uploads/resumes/<file>.pdf`.

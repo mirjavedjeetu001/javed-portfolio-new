@@ -1,24 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import logo from "../Assets/logo.png";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { CgGitFork } from "react-icons/cg";
 import { ImBlog } from "react-icons/im";
 import {
-  AiFillStar,
   AiOutlineHome,
   AiOutlineFundProjectionScreen,
   AiOutlineUser,
 } from "react-icons/ai";
 
 import { CgFileDocument } from "react-icons/cg";
+import usePortfolio from "../hooks/usePortfolio";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
+  const { data } = usePortfolio();
+  const settings = data?.siteSettings;
+  const hasBlog = settings?.enable_blog || (data?.blogPosts?.length || 0) > 0;
+  const resumeLink = data?.about?.resume || "";
+
+  const navItems = useMemo(
+    () => [
+      { key: "home", label: "Home", to: "/", icon: <AiOutlineHome style={{ marginBottom: "2px" }} />, show: true },
+      { key: "about", label: "About", to: "/about", icon: <AiOutlineUser style={{ marginBottom: "2px" }} />, show: Boolean(data?.about) },
+      {
+        key: "projects",
+        label: "Projects",
+        to: "/project",
+        icon: <AiOutlineFundProjectionScreen style={{ marginBottom: "2px" }} />,
+        show: (data?.projects?.length || 0) > 0,
+      },
+      {
+        key: "blog",
+        label: "Blog",
+        to: "/blog",
+        icon: <ImBlog style={{ marginBottom: "2px" }} />,
+        show: hasBlog,
+      },
+      {
+        key: "resume",
+        label: "Resume",
+        to: "/resume",
+        icon: <CgFileDocument style={{ marginBottom: "2px" }} />,
+        show: Boolean(resumeLink),
+      },
+    ],
+    [data, hasBlog, resumeLink]
+  );
 
   function scrollHandler() {
     if (window.scrollY >= 20) {
@@ -28,7 +58,10 @@ function NavBar() {
     }
   }
 
-  window.addEventListener("scroll", scrollHandler);
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, []);
 
   return (
     <Navbar
@@ -38,8 +71,14 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href="/" className="d-flex">
-          <img src={logo} className="img-fluid logo" alt="brand" />
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          {settings?.site_logo ? (
+            <img src={settings.site_logo} className="img-fluid logo" alt={settings.site_name} />
+          ) : (
+            <span className="fw-bold text-white" style={{ fontSize: "1.1rem" }}>
+              {settings?.site_name || "Portfolio"}
+            </span>
+          )}
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
@@ -53,65 +92,15 @@ function NavBar() {
         </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
-            <Nav.Item>
-              <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
-                <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/about"
-                onClick={() => updateExpanded(false)}
-              >
-                <AiOutlineUser style={{ marginBottom: "2px" }} /> About
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/project"
-                onClick={() => updateExpanded(false)}
-              >
-                <AiOutlineFundProjectionScreen
-                  style={{ marginBottom: "2px" }}
-                />{" "}
-                Projects
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/resume"
-                onClick={() => updateExpanded(false)}
-              >
-                <CgFileDocument style={{ marginBottom: "2px" }} /> Resume
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                href="https://soumyajitblogs.vercel.app/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ImBlog style={{ marginBottom: "2px" }} /> Blogs
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item className="fork-btn">
-              <Button
-                href="https://github.com/soumyajit4419/Portfolio"
-                target="_blank"
-                className="fork-btn-inner"
-              >
-                <CgGitFork style={{ fontSize: "1.2em" }} />{" "}
-                <AiFillStar style={{ fontSize: "1.1em" }} />
-              </Button>
-            </Nav.Item>
+            {navItems
+              .filter((item) => item.show)
+              .map((item) => (
+                <Nav.Item key={item.key}>
+                  <Nav.Link as={Link} to={item.to} onClick={() => updateExpanded(false)}>
+                    {item.icon} {item.label}
+                  </Nav.Link>
+                </Nav.Item>
+              ))}
           </Nav>
         </Navbar.Collapse>
       </Container>

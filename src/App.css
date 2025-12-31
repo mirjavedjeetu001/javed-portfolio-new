@@ -1,3 +1,111 @@
+/* existing styles ... */
+
+/* Admin console layout */
+.admin-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: #f5f6f8;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  color: #e5e7eb;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid #1f2937;
+}
+
+.admin-brand-title {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #93c5fd;
+}
+
+.admin-brand-sub {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.admin-nav-link {
+  color: #d1d5db !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+}
+
+.admin-nav-link.active,
+.admin-nav-link:focus,
+.admin-nav-link:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.admin-main {
+  padding: 24px;
+  overflow: auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.admin-card {
+  border: none;
+  border-radius: 12px;
+}
+
+/* Resume page */
+.resume-section {
+  padding: 120px 0 80px;
+  position: relative;
+  color: #ffffff;
+}
+
+.resume-title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.resume-sub {
+  color: #cbd5e1;
+  margin-bottom: 16px;
+}
+
+.resume-actions .btn {
+  min-width: 170px;
+  border-radius: 10px;
+}
+
+.resume-preview {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+  .admin-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .admin-nav-link {
+    padding: 8px 10px !important;
+  }
+}
 .App {
   text-align: center;
 }

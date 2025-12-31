@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Col, Row } from "react-bootstrap";
-import macOs from "../../Assets/TechIcons/Apple MacOSX.svg";
-import chrome from "../../Assets/TechIcons/Google Chrome.svg";
+import usePortfolio from "../../hooks/usePortfolio";
 import vsCode from "../../Assets/TechIcons/vscode.svg";
 import intelliJ from "../../Assets/TechIcons/intellij-idea.svg";
 
+const fallbackTools = [
+  { name: "VS Code", icon: vsCode },
+  { name: "IntelliJ", icon: intelliJ },
+];
+
 function Toolstack() {
+  const { data } = usePortfolio();
+  const tools = data?.tools || [];
+
+  const toolsToRender = useMemo(() => {
+    if (tools.length) return tools;
+    return fallbackTools;
+  }, [tools]);
+
   return (
     <Row style={{ justifyContent: "center", paddingBottom: "50px" }}>
-      <Col xs={4} md={2} className="tech-icons">
-        <img src={macOs} alt="macOs" className="tech-icon-images" />
-        <div className="tech-icons-text">Mac Os</div>
-      </Col>
-      <Col xs={4} md={2} className="tech-icons ">
-        <img src={chrome} alt="Chrome" className="tech-icon-images" />
-        <div className="tech-icons-text">Google Chrome</div>
-      </Col>
-      <Col xs={4} md={2} className="tech-icons ">
-        <img src={vsCode} alt="vsCode" className="tech-icon-images" />
-        <div className="tech-icons-text">Vs Code</div>
-      </Col>
-
-      <Col xs={4} md={2} className="tech-icons ">
-        <img src={intelliJ} alt="go" className="tech-icon-images" />
-        <div className="tech-icons-text">IntelliJ</div>
-      </Col>
+      {toolsToRender.map((tool, idx) => (
+        <Col xs={4} md={2} className="tech-icons" key={`${tool.name}-${idx}`}>
+          {tool.icon ? (
+            <img src={tool.icon} alt={tool.name} className="tech-icon-images" />
+          ) : (
+            <div className="tech-icon-images text-center fw-bold">{tool.name?.[0] || "?"}</div>
+          )}
+          <div className="tech-icons-text">{tool.name}</div>
+        </Col>
+      ))}
     </Row>
   );
 }

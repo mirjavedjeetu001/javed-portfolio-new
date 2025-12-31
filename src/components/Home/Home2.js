@@ -2,8 +2,19 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import myImg from "../../Assets/avatar.svg";
 import Tilt from "react-parallax-tilt";
+import usePortfolio from "../../hooks/usePortfolio";
 
 function Home2() {
+  const { data } = usePortfolio();
+  const about = data?.about;
+  const settings = data?.siteSettings;
+
+  const intro =
+    about?.intro_text ||
+    "System Engineer (SOC) focused on uptime, reliability, and building scalable products across the stack.";
+
+  const highlight = about?.title || settings?.hero_subtitle || "Full Stack Developer";
+
   return (
     <Container fluid className="home-about-section" id="about">
       <Container>
@@ -13,43 +24,26 @@ function Home2() {
               LET ME <span className="purple"> INTRODUCE </span> MYSELF
             </h1>
             <p className="home-about-body">
-              I’m a Software Engineer who loves transforming ideas into
-              reliable, scalable products. Over time, I’ve explored several
-              technologies and found my passion in building high-performance
-              systems and intuitive user experiences.
+              {intro}
               <br />
               <br />
-              I’m proficient in
+              I focus on
               <i>
-                <b className="purple">
-                  {" "}
-                  JavaScript, C++, Rust, Node.js, and Java{" "}
-                </b>
+                <b className="purple"> {highlight}</b>
               </i>
-              — and I enjoy working across both backend and frontend stacks.
+              , delivering clean architecture, automation, and dependable deployments.
               <br />
               <br />
-              My key areas of interest include developing
+              When possible, I ship with
+              <b className="purple"> Node.js </b> plus modern frameworks like{" "}
               <i>
-                <b className="purple">
-                  {" "}
-                  Web Applications, Blockchain Solutions,{" "}
-                </b>
-              </i>
-              and exploring new ways to bridge on-chain and off-chain systems.
-              <br />
-              <br />
-              Whenever possible, I love building projects with
-              <b className="purple"> Node.js </b> and modern frameworks like{" "}
-              <i>
-                <b className="purple">React.js</b> and{" "}
-                <b className="purple">Next.js</b>.
+                <b className="purple">React.js</b> and <b className="purple">Next.js</b>.
               </i>
             </p>
           </Col>
           <Col md={4} className="myAvtar">
             <Tilt>
-              <img src={myImg} className="img-fluid" alt="avatar" />
+              <img src={about?.profile_image || myImg} className="img-fluid" alt="avatar" />
             </Tilt>
           </Col>
         </Row>

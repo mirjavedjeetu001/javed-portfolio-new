@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Card from "react-bootstrap/Card";
 import { ImPointRight } from "react-icons/im";
+import usePortfolio from "../../hooks/usePortfolio";
 
 function AboutCard() {
+  const { data } = usePortfolio();
+  const about = data?.about;
+
+  const hobbies = useMemo(() => {
+    if (!about?.hobbies) return [];
+    return about.hobbies.split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
+  }, [about]);
+
   return (
     <Card className="quote-card-view">
       <Card.Body>
         <blockquote className="blockquote mb-0">
           <p style={{ textAlign: "justify" }}>
-            Hi everyone! I’m <span className="purple">Soumyajit Behera</span>{" "}
-            from <span className="purple">Bhubaneswar, India</span>.
-            <br />
-            I’m currently working as a{" "}
-            <span className="purple">Software Developer</span> at{" "}
-            <span className="purple">Juspay</span>.
-            <br />I hold an Integrated M.Sc. (IMSc) in{" "}
-            <span className="purple">Mathematics and Computing</span> from{" "}
-            <span className="purple">BIT Mesra</span>.
+            {about?.bio || "Passionate builder focused on reliable systems, clean architecture, and delightful user experiences."}
             <br />
             <br />
             Outside of coding, I love engaging in activities that keep me
@@ -24,21 +25,23 @@ function AboutCard() {
           </p>
 
           <ul>
-            <li className="about-activity">
-              <ImPointRight /> Playing Games 🎮
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Writing Tech Blogs ✍️
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Traveling and Exploring New Places 🌍
-            </li>
+            {hobbies.length ? (
+              hobbies.map((item, idx) => (
+                <li className="about-activity" key={idx}>
+                  <ImPointRight /> {item}
+                </li>
+              ))
+            ) : (
+              <li className="about-activity">
+                <ImPointRight /> Learning new tools
+              </li>
+            )}
           </ul>
 
           <p style={{ color: "rgb(155 126 172)" }}>
-            "Strive to build things that make a difference!"{" "}
+            {about?.quote || "Strive to build things that make a difference!"}
           </p>
-          <footer className="blockquote-footer">Soumyajit</footer>
+          <footer className="blockquote-footer">{about?.quote_author || about?.name || "Javed"}</footer>
         </blockquote>
       </Card.Body>
     </Card>
